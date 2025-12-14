@@ -1,6 +1,11 @@
-﻿namespace WebApi.Graph.Types
+﻿using Domain.Aggregates.CleanerAggregate.ReadModels;
+
+namespace WebApi.Graph.Types;
+
+public sealed class CleanerType : ObjectType<CleanerReadModel>
 {
-    public sealed class CleanerType : ObjectType<>
+    protected override void Configure(IObjectTypeDescriptor<CleanerReadModel> d)
     {
+        base.Configure(d);
     }
 }

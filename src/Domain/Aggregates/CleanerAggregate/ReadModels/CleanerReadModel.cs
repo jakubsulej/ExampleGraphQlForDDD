@@ -1,11 +1,12 @@
-﻿using Domain.Aggregates.CleanerAggregate.ValueObjects;
+﻿using Domain.Abstractions;
+using Domain.Aggregates.CleanerAggregate.ValueObjects;
 
 namespace Domain.Aggregates.CleanerAggregate.ReadModels;
 
-public class CleanerReadModel
+public class CleanerReadModel : EntityReadModel
 {
-    public required string Name { get; set; }
-    public required string Description { get; set; }
+    public required string Name { get; init; }
+    public required string Description { get; init; }
 
-    private readonly List<CleanerOfferedService> _cleanerOfferedServices = [];
+    public List<CleanerOfferedService>? CleanerOfferedServices { get; init; }
 }

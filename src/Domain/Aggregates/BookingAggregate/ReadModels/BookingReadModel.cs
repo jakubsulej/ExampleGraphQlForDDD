@@ -1,8 +1,15 @@
-﻿namespace Domain.Aggregates.BookingAggregate.ReadModels;
+﻿using Domain.Abstractions;
+using Domain.Aggregates.CustomerAggregate.ReadModels;
+using Domain.Aggregates.ServiceOfferAggregate.ReadModels;
 
-public class BookingReadModel
+namespace Domain.Aggregates.BookingAggregate.ReadModels;
+
+public class BookingReadModel : EntityReadModel
 {
-    public Guid ServiceOfferAggregateId { get; set; }
-    public Guid CustomerAggregateId { get; set; }
-    public List<ServicePricingSnapshotReadModel> ServicePricingSnapshots { get; set; } = [];
+    public required Guid ServiceOfferAggregateId { get; init; }
+    public required Guid CustomerAggregateId { get; init; }
+
+    public ServiceOfferReadModel? ServiceOffer { get; init; }
+    public CustomerReadModel? Customer { get; init; }
+    public List<ServicePricingSnapshotReadModel>? ServicePricingSnapshots { get; init; }
 }
