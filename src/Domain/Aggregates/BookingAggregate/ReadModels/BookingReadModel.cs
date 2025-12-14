@@ -1,4 +1,5 @@
 ﻿using Domain.Abstractions;
+using Domain.Aggregates.BookingReviewAggregate.ReadModels;
 using Domain.Aggregates.CustomerAggregate.ReadModels;
 using Domain.Aggregates.ServiceOfferAggregate.ReadModels;
 
@@ -12,4 +13,5 @@ public class BookingReadModel : EntityReadModel
     public ServiceOfferReadModel? ServiceOffer { get; init; }
     public CustomerReadModel? Customer { get; init; }
     public List<ServicePricingSnapshotReadModel>? ServicePricingSnapshots { get; init; }
+    public List<BookingReviewReadModel>? BookingReviews { get; init; }
 }

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="EntityFramework\Migrations\" />
-    <Folder Include="EntityFramework\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
