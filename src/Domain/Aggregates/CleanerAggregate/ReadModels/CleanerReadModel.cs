@@ -8,5 +8,5 @@ public class CleanerReadModel : EntityReadModel
     public required string Name { get; init; }
     public required string Description { get; init; }
 
-    public List<ServiceOfferReadModel>? ServiceOffers { get; init; }
+    public List<ServiceOfferReadModel>? OfferedServices { get; init; }
 }

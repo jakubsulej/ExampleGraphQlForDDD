@@ -13,9 +13,10 @@ public record GetServiceOffersPage : IRequest<GetServiceOffersPageResponse>
 public record GetServiceOffersPageResponse
 {
     public required IEnumerable<ServiceOfferReadModel> ServiceOffers { get; init; }
+    public required int TotalCount { get; init; }
 }
 
-public class GetServiceOffersRequestHandler : IRequestHandler<GetServiceOffersPage, GetServiceOffersPageResponse>
+internal class GetServiceOffersRequestHandler : IRequestHandler<GetServiceOffersPage, GetServiceOffersPageResponse>
 {
     private readonly IServiceOfferQueryStore _queryStore;
 
@@ -26,6 +27,13 @@ public class GetServiceOffersRequestHandler : IRequestHandler<GetServiceOffersPa
 
     public async Task<GetServiceOffersPageResponse> Handle(GetServiceOffersPage request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var serviceOffers = await _queryStore.GetServiceOffers(request.Page, request.PageSize, cancellationToken);
+        var serviceOffersCount = await _queryStore.GetServiceOffersCount(cancellationToken);
+
+        return new GetServiceOffersPageResponse
+        {
+            ServiceOffers = serviceOffers,
+            TotalCount = serviceOffersCount,
+        };
     }
 }
