@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates.BookingReviewAggregate.ReadModels;
+﻿using Domain.Aggregates.BookingAggregate.ReadModels;
 
 namespace WebApi.Graph.Types;
 

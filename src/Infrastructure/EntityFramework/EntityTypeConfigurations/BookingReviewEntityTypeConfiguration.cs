@@ -1,5 +1,5 @@
 ﻿using Domain.Aggregates.BookingAggregate;
-using Domain.Aggregates.BookingReviewAggregate;
+using Domain.Aggregates.BookingAggregate.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

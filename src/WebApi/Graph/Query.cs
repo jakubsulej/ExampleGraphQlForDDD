@@ -5,7 +5,7 @@ namespace WebApi.Graph;
 
 public class Query
 {
-    public Task<GetServiceOffersPageResponse> GetServiceOffers(
+    public Task<GetServiceOffersPageResponse> GetServiceOffersPage(
         int page,
         int pageSize,
         [Service] IMediator mediator,
@@ -16,7 +16,7 @@ public class Query
             PageSize = pageSize
         }, cancellationToken);
 
-    public Task<GetCleanersPageResponse> GetCleaners(
+    public Task<GetCleanersPageResponse> GetCleanersPage(
         int page,
         int pageSize,
         [Service] IMediator mediator,

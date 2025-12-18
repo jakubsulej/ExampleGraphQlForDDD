@@ -1,5 +1,5 @@
 ﻿using Domain.Aggregates.BookingAggregate;
-using Domain.Aggregates.BookingReviewAggregate;
+using Domain.Aggregates.BookingAggregate.Entities;
 using Domain.Aggregates.CleanerAggregate;
 using Domain.Aggregates.CustomerAggregate;
 using Domain.Aggregates.ServiceOfferAggregate;

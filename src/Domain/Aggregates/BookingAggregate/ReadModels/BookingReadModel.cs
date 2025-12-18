@@ -1,5 +1,4 @@
 ﻿using Domain.Abstractions;
-using Domain.Aggregates.BookingReviewAggregate.ReadModels;
 using Domain.Aggregates.CustomerAggregate.ReadModels;
 using Domain.Aggregates.ServiceOfferAggregate.ReadModels;
 

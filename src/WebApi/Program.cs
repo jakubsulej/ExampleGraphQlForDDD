@@ -9,15 +9,23 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
         var configuration = builder.Configuration;
 
-        var app = builder.Build();
+        //builder.Services
+        //    .AddAuthentication("Bearer")
+        //    .AddJwtBearer("Bearer", object => 
+        //    {
+
+        //    });
+        //builder.Services.AddAuthorization();
 
         builder.Services.AddWebApiServices(configuration);
         builder.Services.AddApplicationServices();
         builder.Services.AddInfrastructureServices(configuration);
 
+        var app = builder.Build();
+
         app.UseHttpsRedirection();
-        app.UseAuthorization();
-        app.UseAuthentication();
+        //app.UseAuthorization();
+        //app.UseAuthentication();
 
         app.MapGraphQL();
 

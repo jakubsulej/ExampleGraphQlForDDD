@@ -1,4 +1,7 @@
-﻿namespace WebApi.DependencyInjection;
+﻿using WebApi.Graph;
+using WebApi.Graph.Types;
+
+namespace WebApi.DependencyInjection;
 
 public static class WebApiServiceCollectionExtensions
 {
@@ -6,6 +9,13 @@ public static class WebApiServiceCollectionExtensions
     { 
         services
             .AddGraphQLServer()
+            .AddQueryType<Query>()
+            //.AddMutationType<Mutation>()
+            .AddType<BookingReviewType>()
+            .AddType<BookingType>()
+            .AddType<CleanerType>()
+            .AddType<CustomerType>()
+            .AddType<ServiceOfferType>()
             .AddAuthorization()
             .DisableIntrospection(false)
             .ModifyCostOptions(o =>
