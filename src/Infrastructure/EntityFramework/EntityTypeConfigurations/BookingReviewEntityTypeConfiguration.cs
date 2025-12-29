@@ -8,7 +8,7 @@ internal class BookingReviewEntityTypeConfiguration : IEntityTypeConfiguration<B
 {
     public void Configure(EntityTypeBuilder<BookingReview> builder)
     {
-        builder.ToTable("BookingReviews");
+        builder.ToTable(nameof(BookingReview), nameof(BookingReview));
         builder.HasKey(br => br.Id);
         builder.Property(br => br.Id).HasColumnOrder(0);
 

@@ -1,4 +1,5 @@
 ﻿using Domain.Aggregates.CleanerAggregate;
+using Domain.Aggregates.CleanerAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,7 @@ internal class CleanerEntityTypeConfiguration : IEntityTypeConfiguration<Cleaner
 {
     public void Configure(EntityTypeBuilder<Cleaner> builder)
     {
-        builder.ToTable(nameof(Cleaner));
+        builder.ToTable(nameof(Cleaner), nameof(Cleaner));
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Id).HasColumnOrder(0);
         builder.Property(c => c.AggregateId)
@@ -31,15 +32,13 @@ internal class CleanerEntityTypeConfiguration : IEntityTypeConfiguration<Cleaner
         builder.Property(c => c.IsActive)
             .IsRequired();
 
-        // Configure owned value objects collection
         builder.OwnsMany(c => c.CleanerOfferedServices, offeredService =>
         {
-            offeredService.ToTable("CleanerOfferedServices");
+            offeredService.ToTable(nameof(CleanerOfferedService), nameof(Cleaner));
             offeredService.WithOwner().HasForeignKey("CleanerId");
             offeredService.Property<int>("Id").ValueGeneratedOnAdd();
             offeredService.HasKey("Id");
             offeredService.Property(os => os.OfferedServiceAggregateId)
-                .HasColumnName("OfferedServiceAggregateId")
                 .IsRequired();
         });
 

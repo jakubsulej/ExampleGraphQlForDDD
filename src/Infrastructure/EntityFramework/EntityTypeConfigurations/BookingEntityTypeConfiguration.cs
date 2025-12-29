@@ -1,4 +1,5 @@
 ﻿using Domain.Aggregates.BookingAggregate;
+using Domain.Aggregates.BookingAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,7 @@ internal class BookingEntityTypeConfiguration : IEntityTypeConfiguration<Booking
 {
     public void Configure(EntityTypeBuilder<Booking> builder)
     {
-        builder.ToTable(nameof(Booking));
+        builder.ToTable(nameof(Booking), nameof(Booking));
         builder.HasKey(b => b.Id);
         builder.Property(b => b.Id).HasColumnOrder(0);
         builder.Property(b => b.AggregateId)
@@ -27,26 +28,21 @@ internal class BookingEntityTypeConfiguration : IEntityTypeConfiguration<Booking
         builder.Property(b => b.ScheduledDate);
         builder.Property(b => b.CompletedDate);
 
-        // Configure owned value objects collection
         builder.OwnsMany(b => b.ServicePricingSnapshots, snapshot =>
         {
-            snapshot.ToTable("ServicePricingSnapshots");
+            snapshot.ToTable(nameof(ServicePricingSnapshot), nameof(Booking));
             snapshot.WithOwner().HasForeignKey("BookingId");
             snapshot.Property<int>("Id").ValueGeneratedOnAdd();
             snapshot.HasKey("Id");
             snapshot.Property(s => s.Price)
-                .HasColumnName("Price")
                 .IsRequired();
             snapshot.Property(s => s.PricingModel)
-                .HasColumnName("PricingModel")
                 .HasConversion<string>()
                 .IsRequired();
             snapshot.Property(s => s.SnapshotDate)
-                .HasColumnName("SnapshotDate")
                 .IsRequired();
         });
 
-        // Configure one-to-many relationship with BookingReview entity
         builder.HasMany(b => b.BookingReviews)
             .WithOne()
             .HasForeignKey(br => br.BookingAggregateId)

@@ -1,4 +1,5 @@
 ﻿using Domain.Aggregates.ServiceOfferAggregate;
+using Domain.Aggregates.ServiceOfferAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,7 @@ internal class ServiceOfferEntityTypeConfiguration : IEntityTypeConfiguration<Se
 {
     public void Configure(EntityTypeBuilder<ServiceOffer> builder)
     {
-        builder.ToTable(nameof(ServiceOffer));
+        builder.ToTable(nameof(ServiceOffer), nameof(ServiceOffer));
         builder.HasKey(so => so.Id);
         builder.Property(so => so.Id).HasColumnOrder(0);
         builder.Property(so => so.AggregateId)
@@ -28,10 +29,9 @@ internal class ServiceOfferEntityTypeConfiguration : IEntityTypeConfiguration<Se
         builder.Property(so => so.IsActive)
             .IsRequired();
 
-        // Configure owned value objects collection
         builder.OwnsMany(so => so.ServicePricings, pricing =>
         {
-            pricing.ToTable("ServicePricings");
+            pricing.ToTable(nameof(ServicePricing), nameof(ServiceOffer));
             pricing.WithOwner().HasForeignKey("ServiceOfferId");
             pricing.Property<int>("Id").ValueGeneratedOnAdd();
             pricing.HasKey("Id");

@@ -8,7 +8,7 @@ internal class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Custom
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
-        builder.ToTable(nameof(Customer));
+        builder.ToTable(nameof(Customer), nameof(Customer));
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Id).HasColumnOrder(0);
         builder.Property(c => c.AggregateId)
