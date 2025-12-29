@@ -16,9 +16,9 @@ public static class InfrastructureServiceCollectionExtensions
     {
         services
             .AddDbContextPool<ServiceDbContext>(o => 
-                o.UseSqlServer(configuration.GetConnectionString("Database"), b => b.EnableRetryOnFailure()), 256)
+                o.UseSqlServer(configuration.GetConnectionString("ServiceDatabase"), b => b.EnableRetryOnFailure()), 256)
             .AddPooledDbContextFactory<ServiceDbContext>(o =>
-                o.UseSqlServer(configuration.GetConnectionString("Database"), b => b.EnableRetryOnFailure()), 256)
+                o.UseSqlServer(configuration.GetConnectionString("ServiceDatabase"), b => b.EnableRetryOnFailure()), 256)
             .AddScoped<IBookingQueryStore, BookingQueryStore>()
             .AddScoped<ICleanerQueryStore, CleanerQueryStore>()
             .AddScoped<ICustomerQueryStore, CustomerQueryStore>()
