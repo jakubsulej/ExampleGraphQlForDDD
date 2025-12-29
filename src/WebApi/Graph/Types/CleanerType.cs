@@ -15,7 +15,7 @@ public sealed class CleanerType : ObjectType<CleanerReadModel>
             {
                 var cleaner = ctx.Parent<CleanerReadModel>();
                 var loader = ctx.DataLoader<ServiceOffersByCleanerIdDataLoader>();
-                return loader.LoadAsync(cleaner.AggregateId, ctx.RequestAborted);
+                return loader.LoadAsync(cleaner.CleanerAggregateId, ctx.RequestAborted);
             });
     }
 }

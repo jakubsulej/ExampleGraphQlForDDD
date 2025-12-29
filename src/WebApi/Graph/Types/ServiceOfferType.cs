@@ -8,14 +8,14 @@ public sealed class ServiceOfferType : ObjectType<ServiceOfferReadModel>
     protected override void Configure(IObjectTypeDescriptor<ServiceOfferReadModel> d)
     {
         base.Configure(d);
-        
         d.Field(o => o.Cleaner)
             .Type<ObjectType<Domain.Aggregates.CleanerAggregate.ReadModels.CleanerReadModel>>()
-            .Resolve(ctx =>
+            .Resolve(async ctx =>
             {
                 var serviceOffer = ctx.Parent<ServiceOfferReadModel>();
                 var loader = ctx.DataLoader<CleanerByAggregateIdDataLoader>();
-                return loader.LoadAsync(serviceOffer.CleanerAggregateId, ctx.RequestAborted);
+                var cleaners = await loader.LoadAsync(serviceOffer.CleanerAggregateId, ctx.RequestAborted);
+                return cleaners?.FirstOrDefault();
             });
     }
 }

@@ -21,7 +21,7 @@ internal class GetCleanersByAggregateIdsRequestHandler : IRequestHandler<GetClea
     public async Task<ILookup<Guid, CleanerReadModel>> Handle(GetCleanersByAggregateIds request, CancellationToken cancellationToken)
     {
         var cleaners = await _queryStore.GetCleanersByAggregateIds(request.CleanerAggregateIds, cancellationToken);
-        var lookup = cleaners.ToLookup(c => c.AggregateId);
+        var lookup = cleaners.ToLookup(c => c.CleanerAggregateId);
         return lookup;
     }
 }

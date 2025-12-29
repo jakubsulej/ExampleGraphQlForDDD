@@ -1,10 +1,12 @@
 ﻿using Application.Queries;
+using HotChocolate;
 using MediatR;
 
 namespace WebApi.Graph;
 
 public class Query
 {
+    [GraphQLName("serviceOffersPage")]
     public Task<GetServiceOffersPageResponse> GetServiceOffersPage(
         int page,
         int pageSize,
