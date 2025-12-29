@@ -80,13 +80,13 @@ internal class CustomerQueryStore : ICustomerQueryStore
 
     public async Task<CustomerReadModel?> GetCustomerByAggregateId(Guid customerAggregateId, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         return await GetCustomerByAggregateIdQuery(dbContext, customerAggregateId, cancellationToken);
     }
 
     public async Task<List<CustomerReadModel>> GetCustomersByAggregateIds(IEnumerable<Guid> customerAggregateIds, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var result = new List<CustomerReadModel>();
 
         await foreach (var item in GetCustomersByAggregateIdsQuery(dbContext, customerAggregateIds).WithCancellation(cancellationToken))
@@ -100,7 +100,7 @@ internal class CustomerQueryStore : ICustomerQueryStore
 
     public async Task<List<CustomerReadModel>> GetCustomers(int page, int pageSize, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var result = new List<CustomerReadModel>();
 
         await foreach (var item in GetCustomersQuery(dbContext, page, pageSize).WithCancellation(cancellationToken))
@@ -114,7 +114,7 @@ internal class CustomerQueryStore : ICustomerQueryStore
 
     public async Task<int> GetCustomersCount(CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         return await dbContext.Customers.CountAsync(cancellationToken);
     }
 }

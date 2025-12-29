@@ -49,7 +49,7 @@ internal class BookingEntityTypeConfiguration : IEntityTypeConfiguration<Booking
         // Configure one-to-many relationship with BookingReview entity
         builder.HasMany(b => b.BookingReviews)
             .WithOne()
-            .HasForeignKey("BookingId")
+            .HasForeignKey(br => br.BookingAggregateId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Ignore(b => b.DomainEvents);

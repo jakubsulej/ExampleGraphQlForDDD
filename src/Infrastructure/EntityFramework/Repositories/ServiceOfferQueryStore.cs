@@ -67,7 +67,7 @@ internal class ServiceOfferQueryStore : IServiceOfferQueryStore
 
     public async Task<List<ServiceOfferReadModel>> GetServiceOffers(int page, int pageSize, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var result = new List<ServiceOfferReadModel>();
 
         await foreach (var item in GetServiceOffersQuery(dbContext, page, pageSize).WithCancellation(cancellationToken))
@@ -81,14 +81,14 @@ internal class ServiceOfferQueryStore : IServiceOfferQueryStore
 
     public async Task<int> GetServiceOffersCount(CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var count = await dbContext.ServiceOffers.CountAsync(cancellationToken);
         return count;
     }
 
     public async Task<List<ServiceOfferReadModel>> GetServiceOffersByCleanerAggregateIds(IEnumerable<Guid> cleanerAggregateIds, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var result = new List<ServiceOfferReadModel>();
 
         await foreach (var item in GetServicesOfferByCleanerAggregateIdsQuery(dbContext, cleanerAggregateIds).WithCancellation(cancellationToken))

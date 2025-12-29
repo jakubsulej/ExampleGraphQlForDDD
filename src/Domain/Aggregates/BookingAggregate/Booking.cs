@@ -38,6 +38,8 @@ public class Booking : AggregateRoot
             throw new ArgumentException("Customer aggregate ID cannot be empty", nameof(customerAggregateId));
         if (pricingSnapshots == null || pricingSnapshots.Count == 0)
             throw new ArgumentException("At least one pricing snapshot is required", nameof(pricingSnapshots));
+        if (scheduledDate <= DateTimeOffset.UtcNow)
+            throw new ArgumentException("Scheduled date must be in the future", nameof(scheduledDate));
 
         var booking = new Booking
         {
@@ -47,6 +49,7 @@ public class Booking : AggregateRoot
             Status = BookingStatus.Pending,
             ScheduledDate = scheduledDate,
             CreatedAt = DateTimeOffset.UtcNow,
+            ArchivedAt = default(DateTimeOffset),
             UpdatedAt = DateTimeOffset.UtcNow
         };
 
@@ -71,7 +74,7 @@ public class Booking : AggregateRoot
 
     public void Complete()
     {
-        if (Status != BookingStatus.Confirmed)
+        if (Status != BookingStatus.Confirmed && Status != BookingStatus.InProgress)
             throw new InvalidOperationException($"Cannot complete booking in {Status} status");
 
         Status = BookingStatus.Completed;

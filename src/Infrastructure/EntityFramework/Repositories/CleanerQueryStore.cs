@@ -54,13 +54,13 @@ internal class CleanerQueryStore : ICleanerQueryStore
 
     public async Task<CleanerReadModel?> GetCleanerByAggregateId(Guid cleanerAggregateId, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         return await GetCleanerByAggregateIdQuery(dbContext, cleanerAggregateId, cancellationToken);
     }
 
     public async Task<List<CleanerReadModel>> GetCleaners(int page, int pageSize, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var result = new List<CleanerReadModel>();
 
         await foreach (var item in GetCleanersQuery(dbContext, page, pageSize).WithCancellation(cancellationToken))
@@ -74,7 +74,7 @@ internal class CleanerQueryStore : ICleanerQueryStore
 
     public async Task<int> GetCleanersCount(CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var count = await dbContext.Cleaners.CountAsync(cancellationToken);
         return count;
     }

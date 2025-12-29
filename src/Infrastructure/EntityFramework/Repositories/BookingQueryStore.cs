@@ -39,7 +39,7 @@ internal class BookingQueryStore : IBookingQueryStore
                         BookingReviews = b.BookingReviews.Select(r => new BookingReviewReadModel
                         {
                             Id = r.Id,
-                            BookingId = (int)r.Id,
+                            BookingId = (int)b.Id,
                             Review = r.Comment,
                             Rating = r.Rating,
                             CreatedAt = r.CreatedAt,
@@ -73,7 +73,7 @@ internal class BookingQueryStore : IBookingQueryStore
                         BookingReviews = b.BookingReviews.Select(r => new BookingReviewReadModel
                         {
                             Id = r.Id,
-                            BookingId = (int)r.Id,
+                            BookingId = (int)b.Id,
                             Review = r.Comment,
                             Rating = r.Rating,
                             CreatedAt = r.CreatedAt,
@@ -108,7 +108,7 @@ internal class BookingQueryStore : IBookingQueryStore
                         BookingReviews = b.BookingReviews.Select(r => new BookingReviewReadModel
                         {
                             Id = r.Id,
-                            BookingId = (int)r.Id,
+                            BookingId = (int)b.Id,
                             Review = r.Comment,
                             Rating = r.Rating,
                             CreatedAt = r.CreatedAt,
@@ -144,7 +144,7 @@ internal class BookingQueryStore : IBookingQueryStore
                         BookingReviews = b.BookingReviews.Select(r => new BookingReviewReadModel
                         {
                             Id = r.Id,
-                            BookingId = (int)r.Id,
+                            BookingId = (int)b.Id,
                             Review = r.Comment,
                             Rating = r.Rating,
                             CreatedAt = r.CreatedAt,
@@ -156,13 +156,13 @@ internal class BookingQueryStore : IBookingQueryStore
 
     public async Task<BookingReadModel?> GetBookingByAggregateId(Guid bookingAggregateId, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         return await GetBookingByAggregateIdQuery(dbContext, bookingAggregateId, cancellationToken);
     }
 
     public async Task<List<BookingReadModel>> GetBookingsByAggregateIds(IEnumerable<Guid> bookingAggregateIds, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var result = new List<BookingReadModel>();
 
         await foreach (var item in GetBookingsByAggregateIdsQuery(dbContext, bookingAggregateIds).WithCancellation(cancellationToken))
@@ -176,7 +176,7 @@ internal class BookingQueryStore : IBookingQueryStore
 
     public async Task<List<BookingReadModel>> GetBookingsByCustomerAggregateId(Guid customerAggregateId, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var result = new List<BookingReadModel>();
 
         await foreach (var item in GetBookingsByCustomerAggregateIdQuery(dbContext, customerAggregateId).WithCancellation(cancellationToken))
@@ -190,7 +190,7 @@ internal class BookingQueryStore : IBookingQueryStore
 
     public async Task<List<BookingReadModel>> GetBookings(int page, int pageSize, CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var result = new List<BookingReadModel>();
 
         await foreach (var item in GetBookingsQuery(dbContext, page, pageSize).WithCancellation(cancellationToken))
@@ -204,7 +204,7 @@ internal class BookingQueryStore : IBookingQueryStore
 
     public async Task<int> GetBookingsCount(CancellationToken cancellationToken)
     {
-        var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         return await dbContext.Bookings.CountAsync(cancellationToken);
     }
 }

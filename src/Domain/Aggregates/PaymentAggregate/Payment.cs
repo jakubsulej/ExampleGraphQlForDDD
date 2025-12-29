@@ -11,6 +11,7 @@ public class Payment : AggregateRoot
     public string? TransactionId { get; private set; }
     public DateTimeOffset? PaidAt { get; private set; }
     public string? FailureReason { get; private set; }
+    public string? RefundReason { get; private set; }
 
     // Private constructor for EF Core
     private Payment() { }
@@ -97,7 +98,7 @@ public class Payment : AggregateRoot
             throw new InvalidOperationException("Can only refund completed payments");
 
         Status = PaymentStatus.Refunded;
-        FailureReason = reason;
+        RefundReason = reason;
         UpdatedAt = DateTimeOffset.UtcNow;
 
         // TODO: Register domain event: PaymentRefundedEvent
