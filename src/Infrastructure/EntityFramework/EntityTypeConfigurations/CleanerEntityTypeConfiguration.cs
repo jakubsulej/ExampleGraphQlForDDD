@@ -1,5 +1,4 @@
-﻿using Domain.Aggregates.BookingAggregate;
-using Domain.Aggregates.CleanerAggregate;
+﻿using Domain.Aggregates.CleanerAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,6 +8,42 @@ internal class CleanerEntityTypeConfiguration : IEntityTypeConfiguration<Cleaner
 {
     public void Configure(EntityTypeBuilder<Cleaner> builder)
     {
-        throw new NotImplementedException();
+        builder.ToTable(nameof(Cleaner));
+        builder.HasKey(c => c.Id);
+        builder.Property(c => c.Id).HasColumnOrder(0);
+        builder.Property(c => c.AggregateId)
+            .HasColumnName($"{nameof(Cleaner)}{nameof(Cleaner.AggregateId)}")
+            .HasColumnOrder(1);
+        builder.HasIndex(c => c.AggregateId)
+            .IsUnique();
+
+        builder.Property(c => c.Name)
+            .IsRequired()
+            .HasMaxLength(200);
+        builder.Property(c => c.Description)
+            .IsRequired()
+            .HasMaxLength(2000);
+        builder.Property(c => c.PhoneNumber)
+            .IsRequired()
+            .HasMaxLength(20);
+        builder.Property(c => c.Email)
+            .HasMaxLength(255);
+        builder.Property(c => c.IsActive)
+            .IsRequired();
+
+        // Configure owned value objects collection
+        builder.OwnsMany(c => c.CleanerOfferedServices, offeredService =>
+        {
+            offeredService.ToTable("CleanerOfferedServices");
+            offeredService.WithOwner().HasForeignKey("CleanerId");
+            offeredService.Property<int>("Id").ValueGeneratedOnAdd();
+            offeredService.HasKey("Id");
+            offeredService.Property(os => os.OfferedServiceAggregateId)
+                .HasColumnName("OfferedServiceAggregateId")
+                .IsRequired();
+        });
+
+        builder.Ignore(c => c.DomainEvents);
+        builder.Property<byte[]>("RowVersion").IsRowVersion();
     }
 }

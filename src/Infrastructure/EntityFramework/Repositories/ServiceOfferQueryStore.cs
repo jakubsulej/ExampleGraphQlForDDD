@@ -25,6 +25,7 @@ internal class ServiceOfferQueryStore : IServiceOfferQueryStore
                     .Select(b => new ServiceOfferReadModel
                     {
                         Id = b.Id,
+                        AggregateId = b.AggregateId,
                         Title = b.Title,
                         Description = b.Description,
                         CleanerAggregateId = b.CleanerAggregateId,
@@ -45,10 +46,11 @@ internal class ServiceOfferQueryStore : IServiceOfferQueryStore
                 dbContext.ServiceOffers
                     .AsNoTracking()
                     .OrderByDescending(o => o.Id)
-                    .Where(c => cleanerAggregateIds.Contains(c.AggregateId))
+                    .Where(c => cleanerAggregateIds.Contains(c.CleanerAggregateId))
                     .Select(b => new ServiceOfferReadModel
                     {
                         Id = b.Id,
+                        AggregateId = b.AggregateId,
                         Title = b.Title,
                         Description = b.Description,
                         CleanerAggregateId = b.CleanerAggregateId,

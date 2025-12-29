@@ -1,5 +1,4 @@
-﻿using Domain.Aggregates.BookingAggregate;
-using Domain.Aggregates.BookingAggregate.Entities;
+﻿using Domain.Aggregates.BookingAggregate.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +8,21 @@ internal class BookingReviewEntityTypeConfiguration : IEntityTypeConfiguration<B
 {
     public void Configure(EntityTypeBuilder<BookingReview> builder)
     {
-        builder.ToTable(nameof(Booking), nameof(BookingReview));
-        builder.HasKey(b => b.Id);
+        builder.ToTable("BookingReviews");
+        builder.HasKey(br => br.Id);
+        builder.Property(br => br.Id).HasColumnOrder(0);
+
+        builder.Property(br => br.BookingAggregateId)
+            .IsRequired();
+        builder.Property(br => br.ReviewAggregateId)
+            .IsRequired();
+        builder.Property(br => br.Comment)
+            .IsRequired()
+            .HasMaxLength(2000);
+        builder.Property(br => br.Rating)
+            .IsRequired();
+
+        builder.HasIndex(br => br.BookingAggregateId);
+        builder.HasIndex(br => br.ReviewAggregateId);
     }
 }

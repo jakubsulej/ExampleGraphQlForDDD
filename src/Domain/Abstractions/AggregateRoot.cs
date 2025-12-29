@@ -6,6 +6,21 @@ public abstract class AggregateRoot : Entity
     private readonly List<DomainEvent> _domainEvents = [];
     public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-    public void RegisterDomainEvent(DomainEvent domainEvent) => _domainEvents.Add(domainEvent);
+    protected void RegisterDomainEvent(DomainEvent domainEvent)
+    {
+        if (domainEvent == null)
+            throw new ArgumentNullException(nameof(domainEvent));
+
+        if (domainEvent.AggregateId == Guid.Empty)
+            throw new InvalidOperationException("Domain event must have an AggregateId set");
+
+        _domainEvents.Add(domainEvent);
+    }
+
     public void ClearDomainEvents() => _domainEvents.Clear();
+
+    protected void UpdateTimestamp()
+    {
+        UpdatedAt = DateTimeOffset.UtcNow;
+    }
 }

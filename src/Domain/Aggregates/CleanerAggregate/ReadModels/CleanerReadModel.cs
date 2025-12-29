@@ -5,6 +5,7 @@ namespace Domain.Aggregates.CleanerAggregate.ReadModels;
 
 public class CleanerReadModel : EntityReadModel
 {
+    public required Guid AggregateId { get; init; }
     public required string Name { get; init; }
     public required string Description { get; init; }
 

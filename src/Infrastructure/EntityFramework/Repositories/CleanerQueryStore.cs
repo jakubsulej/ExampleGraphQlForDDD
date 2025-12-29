@@ -23,6 +23,7 @@ internal class CleanerQueryStore : ICleanerQueryStore
                     .Select(b => new CleanerReadModel
                     {
                         Id = b.Id,
+                        AggregateId = b.AggregateId,
                         Name = b.Name,
                         Description = b.Description,
                         ArchivedAt = b.ArchivedAt,
@@ -42,6 +43,7 @@ internal class CleanerQueryStore : ICleanerQueryStore
                     .Select(b => new CleanerReadModel
                     {
                         Id = b.Id,
+                        AggregateId = b.AggregateId,
                         Name = b.Name,
                         Description = b.Description,
                         ArchivedAt = b.ArchivedAt,

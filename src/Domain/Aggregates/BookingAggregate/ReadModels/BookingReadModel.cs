@@ -6,6 +6,7 @@ namespace Domain.Aggregates.BookingAggregate.ReadModels;
 
 public class BookingReadModel : EntityReadModel
 {
+    public required Guid AggregateId { get; init; }
     public required Guid ServiceOfferAggregateId { get; init; }
     public required Guid CustomerAggregateId { get; init; }
 

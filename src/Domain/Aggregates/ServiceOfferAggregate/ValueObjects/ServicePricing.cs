@@ -5,11 +5,30 @@ namespace Domain.Aggregates.ServiceOfferAggregate.ValueObjects;
 
 public class ServicePricing : ValueObject
 {
-    public long Price { get; set; }
-    public PricingModel PricingModel { get; set; }
+    public long Price { get; private init; }
+    public PricingModel PricingModel { get; private init; }
+
+    // Private constructor for EF Core
+    private ServicePricing() { }
+
+    // Factory method for creating value objects
+    public static ServicePricing Create(long price, PricingModel pricingModel)
+    {
+        if (price <= 0)
+            throw new ArgumentException("Price must be greater than zero", nameof(price));
+        if (pricingModel == PricingModel.Undefined)
+            throw new ArgumentException("Pricing model must be specified", nameof(pricingModel));
+
+        return new ServicePricing
+        {
+            Price = price,
+            PricingModel = pricingModel
+        };
+    }
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        throw new NotImplementedException();
+        yield return Price;
+        yield return PricingModel;
     }
 }
