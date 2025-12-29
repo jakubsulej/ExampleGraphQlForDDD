@@ -104,8 +104,6 @@ public class Booking : AggregateRoot
         if (rating < 1 || rating > 5)
             throw new ArgumentException("Rating must be between 1 and 5", nameof(rating));
 
-        // Note: This creates a BookingReview entity within the Booking aggregate
-        // The Review aggregate should be created separately and linked via ReviewAggregateId
         var review = BookingReview.Create(reviewAggregateId, AggregateId, comment, rating);
         _bookingReviews.Add(review);
         UpdatedAt = DateTimeOffset.UtcNow;

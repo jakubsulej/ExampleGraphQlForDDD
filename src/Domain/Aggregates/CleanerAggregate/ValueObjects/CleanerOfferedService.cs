@@ -6,10 +6,8 @@ public class CleanerOfferedService : ValueObject
 {
     public Guid OfferedServiceAggregateId { get; private init; }
 
-    // Private constructor for EF Core
     private CleanerOfferedService() { }
 
-    // Factory method for creating value objects
     public CleanerOfferedService(Guid offeredServiceAggregateId)
     {
         if (offeredServiceAggregateId == Guid.Empty)

@@ -1,5 +1,5 @@
 ﻿using Domain.Abstractions;
-using Domain.Aggregates.PaymentAggregate.Entities;
+using Domain.Aggregates.PaymentAggregate.Enums;
 
 namespace Domain.Aggregates.PaymentAggregate;
 

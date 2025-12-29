@@ -1,4 +1,4 @@
-﻿namespace Domain.Aggregates.PaymentAggregate.Entities;
+﻿namespace Domain.Aggregates.PaymentAggregate.Enums;
 
 public enum PaymentMethod
 {
