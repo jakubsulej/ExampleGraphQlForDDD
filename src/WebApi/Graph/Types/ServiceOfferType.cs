@@ -1,6 +1,5 @@
-﻿using Domain.Aggregates.CleanerAggregate;
-using Domain.Aggregates.ServiceOfferAggregate.ReadModels;
-using HotChocolate.Types;
+﻿using Domain.Aggregates.ServiceOfferAggregate.ReadModels;
+using WebApi.Graph.Loaders;
 
 namespace WebApi.Graph.Types;
 
@@ -9,12 +8,14 @@ public sealed class ServiceOfferType : ObjectType<ServiceOfferReadModel>
     protected override void Configure(IObjectTypeDescriptor<ServiceOfferReadModel> d)
     {
         base.Configure(d);
-        //d.Field(o => o.Cleaner)
-        //    .Type<NonNullType<ListType<NonNullType<ObjectType<Cleaner>>>>>()
-        //    .Resolve(ctx =>
-        //    {
-        //        var serviceOffer = ctx.Parent<ServiceOfferReadModel>();
-        //        //var loader = ctx.DataLoader<>
-        //    });
+        
+        d.Field(o => o.Cleaner)
+            .Type<ObjectType<Domain.Aggregates.CleanerAggregate.ReadModels.CleanerReadModel>>()
+            .Resolve(ctx =>
+            {
+                var serviceOffer = ctx.Parent<ServiceOfferReadModel>();
+                var loader = ctx.DataLoader<CleanerByAggregateIdDataLoader>();
+                return loader.LoadAsync(serviceOffer.CleanerAggregateId, ctx.RequestAborted);
+            });
     }
 }

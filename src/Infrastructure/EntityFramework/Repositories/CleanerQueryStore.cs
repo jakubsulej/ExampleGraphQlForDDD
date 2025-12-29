@@ -32,6 +32,24 @@ internal class CleanerQueryStore : ICleanerQueryStore
                         UpdatedAt = b.UpdatedAt
                     }).FirstOrDefault());
 
+    private static readonly Func<ServiceDbContext, IEnumerable<Guid>, IAsyncEnumerable<CleanerReadModel>> GetCleanersByAggregateIdsQuery =
+        EF.CompileAsyncQuery(
+            (ServiceDbContext dbContext, IEnumerable<Guid> aggregateIds) =>
+                dbContext.Cleaners
+                    .AsNoTracking()
+                    .Where(c => aggregateIds.Contains(c.AggregateId))
+                    .Select(b => new CleanerReadModel
+                    {
+                        Id = b.Id,
+                        AggregateId = b.AggregateId,
+                        Name = b.Name,
+                        Description = b.Description,
+                        ArchivedAt = b.ArchivedAt,
+                        CreatedAt = b.CreatedAt,
+                        IsArchived = b.IsArchived,
+                        UpdatedAt = b.UpdatedAt
+                    }));
+
     private static readonly Func<ServiceDbContext, int, int, IAsyncEnumerable<CleanerReadModel>> GetCleanersQuery =
         EF.CompileAsyncQuery(
             (ServiceDbContext dbContext, int page, int pageSize) =>
@@ -56,6 +74,20 @@ internal class CleanerQueryStore : ICleanerQueryStore
     {
         await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         return await GetCleanerByAggregateIdQuery(dbContext, cleanerAggregateId, cancellationToken);
+    }
+
+    public async Task<List<CleanerReadModel>> GetCleanersByAggregateIds(IEnumerable<Guid> cleanerAggregateIds, CancellationToken cancellationToken)
+    {
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        var result = new List<CleanerReadModel>();
+
+        await foreach (var item in GetCleanersByAggregateIdsQuery(dbContext, cleanerAggregateIds).WithCancellation(cancellationToken))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            result.Add(item);
+        }
+
+        return result;
     }
 
     public async Task<List<CleanerReadModel>> GetCleaners(int page, int pageSize, CancellationToken cancellationToken)

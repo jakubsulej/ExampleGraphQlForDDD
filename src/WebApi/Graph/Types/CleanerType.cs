@@ -1,5 +1,4 @@
-﻿using Application.Queries;
-using Domain.Aggregates.CleanerAggregate.ReadModels;
+﻿using Domain.Aggregates.CleanerAggregate.ReadModels;
 using Domain.Aggregates.ServiceOfferAggregate.ReadModels;
 using WebApi.Graph.Loaders;
 
@@ -11,12 +10,12 @@ public sealed class CleanerType : ObjectType<CleanerReadModel>
     {
         base.Configure(d);
         d.Field(o => o.OfferedServices)
-            .Type<NonNullType<ListType<NonNullType<ObjectType<ServiceOfferReadModel>>>>>()
+            .Type<ListType<ObjectType<ServiceOfferReadModel>>>()
             .Resolve(ctx =>
             {
-                var serviceOffer = ctx.Parent<ServiceOfferReadModel>();
+                var cleaner = ctx.Parent<CleanerReadModel>();
                 var loader = ctx.DataLoader<ServiceOffersByCleanerIdDataLoader>();
-                return loader.LoadAsync(serviceOffer.CleanerAggregateId, ctx.RequestAborted);
+                return loader.LoadAsync(cleaner.AggregateId, ctx.RequestAborted);
             });
     }
 }
