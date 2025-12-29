@@ -39,7 +39,7 @@ namespace Infrastructure.EntityFramework.Migrations
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -63,7 +63,7 @@ namespace Infrastructure.EntityFramework.Migrations
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -87,7 +87,7 @@ namespace Infrastructure.EntityFramework.Migrations
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -110,7 +110,7 @@ namespace Infrastructure.EntityFramework.Migrations
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -131,7 +131,7 @@ namespace Infrastructure.EntityFramework.Migrations
                     Rating = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ArchivedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

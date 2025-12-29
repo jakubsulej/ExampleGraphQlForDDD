@@ -5,7 +5,7 @@ public abstract class Entity
     public long Id { get; protected set; }
     public DateTimeOffset CreatedAt { get; protected set; }
     public DateTimeOffset UpdatedAt { get; protected set; }
-    public DateTimeOffset ArchivedAt { get; protected set; }
+    public DateTimeOffset? ArchivedAt { get; protected set; }
     public bool IsArchived { get; protected set; }
 
     public override bool Equals(object? obj)

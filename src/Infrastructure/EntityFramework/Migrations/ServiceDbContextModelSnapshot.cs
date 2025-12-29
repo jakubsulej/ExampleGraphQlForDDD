@@ -36,7 +36,7 @@ namespace Infrastructure.EntityFramework.Migrations
                         .HasColumnName("BookingAggregateId")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTimeOffset>("ArchivedAt")
+                    b.Property<DateTimeOffset?>("ArchivedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset?>("CompletedDate")
@@ -86,7 +86,7 @@ namespace Infrastructure.EntityFramework.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTimeOffset>("ArchivedAt")
+                    b.Property<DateTimeOffset?>("ArchivedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<long>("BookingId")
@@ -135,7 +135,7 @@ namespace Infrastructure.EntityFramework.Migrations
                         .HasColumnName("CleanerAggregateId")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTimeOffset>("ArchivedAt")
+                    b.Property<DateTimeOffset?>("ArchivedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -200,7 +200,7 @@ namespace Infrastructure.EntityFramework.Migrations
                         .HasColumnName("CustomerAggregateId")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTimeOffset>("ArchivedAt")
+                    b.Property<DateTimeOffset?>("ArchivedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -258,7 +258,7 @@ namespace Infrastructure.EntityFramework.Migrations
                         .HasColumnName("ServiceOfferAggregateId")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTimeOffset>("ArchivedAt")
+                    b.Property<DateTimeOffset?>("ArchivedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<Guid>("CleanerAggregateId")
