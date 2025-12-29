@@ -13,7 +13,7 @@ internal class BookingReviewEntityTypeConfiguration : IEntityTypeConfiguration<B
         builder.HasKey(br => br.Id);
         builder.Property(br => br.Id).HasColumnOrder(0);
 
-        builder.Property(br => br.BookingAggregateId)
+        builder.Property(br => br.BookingId)
             .IsRequired();
         builder.Property(br => br.ReviewAggregateId)
             .IsRequired();
@@ -23,7 +23,7 @@ internal class BookingReviewEntityTypeConfiguration : IEntityTypeConfiguration<B
         builder.Property(br => br.Rating)
             .IsRequired();
 
-        builder.HasIndex(br => br.BookingAggregateId);
+        builder.HasIndex(br => br.BookingId);
         builder.HasIndex(br => br.ReviewAggregateId);
     }
 }

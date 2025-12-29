@@ -45,7 +45,7 @@ internal class BookingEntityTypeConfiguration : IEntityTypeConfiguration<Booking
 
         builder.HasMany(b => b.BookingReviews)
             .WithOne()
-            .HasForeignKey(br => br.BookingAggregateId)
+            .HasForeignKey(br => br.BookingId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Ignore(b => b.DomainEvents);

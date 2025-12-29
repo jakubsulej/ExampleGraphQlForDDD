@@ -104,7 +104,7 @@ public class Booking : AggregateRoot
         if (rating < 1 || rating > 5)
             throw new ArgumentException("Rating must be between 1 and 5", nameof(rating));
 
-        var review = BookingReview.Create(reviewAggregateId, AggregateId, comment, rating);
+        var review = BookingReview.Create(reviewAggregateId, Id, comment, rating);
         _bookingReviews.Add(review);
         UpdatedAt = DateTimeOffset.UtcNow;
 
