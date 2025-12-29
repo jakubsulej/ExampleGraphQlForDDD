@@ -14,6 +14,54 @@ internal class ServiceOfferQueryStore : IServiceOfferQueryStore
         _dbContextFactory = dbContextFactory;
     }
 
+    private static readonly Func<ServiceDbContext, Guid, CancellationToken, Task<ServiceOfferReadModel?>> GetServiceOfferByAggregateIdQuery =
+        EF.CompileAsyncQuery(
+            (ServiceDbContext dbContext, Guid serviceOfferAggregateId, CancellationToken cancellationToken) =>
+                dbContext.ServiceOffers
+                    .AsNoTracking()
+                    .Where(so => so.AggregateId == serviceOfferAggregateId)
+                    .Select(b => new ServiceOfferReadModel
+                    {
+                        Id = b.Id,
+                        AggregateId = b.AggregateId,
+                        Title = b.Title,
+                        Description = b.Description,
+                        CleanerAggregateId = b.CleanerAggregateId,
+                        ArchivedAt = b.ArchivedAt,
+                        CreatedAt = b.CreatedAt,
+                        IsArchived = b.IsArchived,
+                        UpdatedAt = b.UpdatedAt,
+                        ServicePricings = b.ServicePricings.Select(p => new ServicePricingReadModel
+                        {
+                            Price = p.Price,
+                            PricingModel = p.PricingModel
+                        }).ToList()
+                    }).FirstOrDefault());
+
+    private static readonly Func<ServiceDbContext, IEnumerable<Guid>, IAsyncEnumerable<ServiceOfferReadModel>> GetServiceOffersByAggregateIdsQuery =
+        EF.CompileAsyncQuery(
+            (ServiceDbContext dbContext, IEnumerable<Guid> aggregateIds) =>
+                dbContext.ServiceOffers
+                    .AsNoTracking()
+                    .Where(so => aggregateIds.Contains(so.AggregateId))
+                    .Select(b => new ServiceOfferReadModel
+                    {
+                        Id = b.Id,
+                        AggregateId = b.AggregateId,
+                        Title = b.Title,
+                        Description = b.Description,
+                        CleanerAggregateId = b.CleanerAggregateId,
+                        ArchivedAt = b.ArchivedAt,
+                        CreatedAt = b.CreatedAt,
+                        IsArchived = b.IsArchived,
+                        UpdatedAt = b.UpdatedAt,
+                        ServicePricings = b.ServicePricings.Select(p => new ServicePricingReadModel
+                        {
+                            Price = p.Price,
+                            PricingModel = p.PricingModel
+                        }).ToList()
+                    }));
+
     private static readonly Func<ServiceDbContext, int, int, IAsyncEnumerable<ServiceOfferReadModel>> GetServiceOffersQuery =
         EF.CompileAsyncQuery(
             (ServiceDbContext dbContext, int page, int pageSize) =>
@@ -64,6 +112,26 @@ internal class ServiceOfferQueryStore : IServiceOfferQueryStore
                             PricingModel = p.PricingModel
                         }).ToList()
                     }));
+
+    public async Task<ServiceOfferReadModel?> GetServiceOfferByAggregateId(Guid serviceOfferAggregateId, CancellationToken cancellationToken)
+    {
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        return await GetServiceOfferByAggregateIdQuery(dbContext, serviceOfferAggregateId, cancellationToken);
+    }
+
+    public async Task<List<ServiceOfferReadModel>> GetServiceOffersByAggregateIds(IEnumerable<Guid> serviceOfferAggregateIds, CancellationToken cancellationToken)
+    {
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        var result = new List<ServiceOfferReadModel>();
+
+        await foreach (var item in GetServiceOffersByAggregateIdsQuery(dbContext, serviceOfferAggregateIds).WithCancellation(cancellationToken))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            result.Add(item);
+        }
+
+        return result;
+    }
 
     public async Task<List<ServiceOfferReadModel>> GetServiceOffers(int page, int pageSize, CancellationToken cancellationToken)
     {

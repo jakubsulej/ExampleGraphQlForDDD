@@ -17,5 +17,8 @@ public sealed class ServiceOfferType : ObjectType<ServiceOfferReadModel>
                 var cleaners = await loader.LoadAsync(serviceOffer.CleanerAggregateId, ctx.RequestAborted);
                 return cleaners?.FirstOrDefault();
             });
+        
+        d.Field(o => o.ServicePricings)
+            .Type<ListType<ObjectType<ServicePricingReadModel>>>();
     }
 }

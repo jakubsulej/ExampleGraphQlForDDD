@@ -16,6 +16,8 @@ public static class WebApiServiceCollectionExtensions
             .AddType<CleanerType>()
             .AddType<CustomerType>()
             .AddType<ServiceOfferType>()
+            .AddType<ServicePricingType>()
+            .AddType<ServicePricingSnapshotType>()
             .AddAuthorization()
             .DisableIntrospection(false)
             .ModifyCostOptions(o =>
