@@ -1,5 +1,6 @@
 ﻿using Domain.Abstractions;
 using Domain.Aggregates.BookingAggregate.Entities;
+using Domain.Aggregates.BookingAggregate.Enums;
 using Domain.Aggregates.BookingAggregate.ValueObjects;
 using System.Collections.ObjectModel;
 
@@ -19,10 +20,8 @@ public class Booking : AggregateRoot
     public ReadOnlyCollection<ServicePricingSnapshot> ServicePricingSnapshots => _servicePricingSnapshots.AsReadOnly();
     public ReadOnlyCollection<BookingReview> BookingReviews => _bookingReviews.AsReadOnly();
 
-    // Private constructor for EF Core
     private Booking() { }
 
-    // Factory method for creating new bookings
     public static Booking Create(
         Guid aggregateId,
         Guid serviceOfferAggregateId,
@@ -60,7 +59,6 @@ public class Booking : AggregateRoot
         return booking;
     }
 
-    // Domain methods
     public void Confirm()
     {
         if (Status != BookingStatus.Pending)
@@ -125,13 +123,4 @@ public class Booking : AggregateRoot
 
         // TODO: Register domain event: BookingRescheduledEvent
     }
-}
-
-public enum BookingStatus
-{
-    Pending = 0,
-    Confirmed = 1,
-    InProgress = 2,
-    Completed = 3,
-    Cancelled = 4
 }

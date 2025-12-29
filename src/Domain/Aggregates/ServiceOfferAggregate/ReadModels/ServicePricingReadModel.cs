@@ -1,5 +1,4 @@
-﻿using Domain.Abstractions;
-using Domain.Shared.Enums;
+﻿using Domain.Shared.Enums;
 
 namespace Domain.Aggregates.ServiceOfferAggregate.ReadModels;
 

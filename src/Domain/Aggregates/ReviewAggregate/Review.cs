@@ -11,10 +11,8 @@ public class Review : AggregateRoot
     public bool IsPublished { get; private set; }
     public DateTimeOffset? PublishedAt { get; private set; }
 
-    // Private constructor for EF Core
     private Review() { }
 
-    // Factory method for creating new reviews
     public static Review Create(
         Guid aggregateId,
         Guid bookingAggregateId,
@@ -50,7 +48,6 @@ public class Review : AggregateRoot
         return review;
     }
 
-    // Domain methods
     public void Update(string comment, int rating)
     {
         if (string.IsNullOrWhiteSpace(comment))

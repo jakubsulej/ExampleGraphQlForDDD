@@ -9,10 +9,8 @@ public class ServicePricingSnapshot : ValueObject
     public PricingModel PricingModel { get; private init; }
     public DateTimeOffset SnapshotDate { get; private init; }
 
-    // Private constructor for EF Core
     private ServicePricingSnapshot() { }
 
-    // Factory method for creating value objects
     public static ServicePricingSnapshot Create(long price, PricingModel pricingModel, DateTimeOffset? snapshotDate = null)
     {
         if (price <= 0)

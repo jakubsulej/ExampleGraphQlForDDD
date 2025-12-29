@@ -15,10 +15,8 @@ public class Cleaner : AggregateRoot
 
     public IReadOnlyCollection<CleanerOfferedService> CleanerOfferedServices => _cleanerOfferedServices.AsReadOnly();
 
-    // Private constructor for EF Core
     private Cleaner() { }
 
-    // Factory method for creating new cleaners
     public static Cleaner Create(
         Guid aggregateId,
         string name,
@@ -52,7 +50,6 @@ public class Cleaner : AggregateRoot
         return cleaner;
     }
 
-    // Domain methods
     public void UpdateProfile(string name, string description, string phoneNumber, string? email = null)
     {
         if (string.IsNullOrWhiteSpace(name))

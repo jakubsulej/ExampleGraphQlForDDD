@@ -2,7 +2,7 @@
 
 public enum PricingModel
 {
-    Undefined,
-    Hourly,
-    Fixed
+    Undefined = 0,
+    Hourly = 1,
+    Fixed = 2
 }

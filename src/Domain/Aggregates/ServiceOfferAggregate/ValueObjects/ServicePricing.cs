@@ -8,10 +8,8 @@ public class ServicePricing : ValueObject
     public long Price { get; private init; }
     public PricingModel PricingModel { get; private init; }
 
-    // Private constructor for EF Core
     private ServicePricing() { }
 
-    // Factory method for creating value objects
     public static ServicePricing Create(long price, PricingModel pricingModel)
     {
         if (price <= 0)

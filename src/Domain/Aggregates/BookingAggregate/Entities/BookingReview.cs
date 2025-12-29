@@ -9,10 +9,8 @@ public class BookingReview : Entity
     public string Comment { get; private set; } = string.Empty;
     public int Rating { get; private set; }
 
-    // Private constructor for EF Core
     private BookingReview() { }
 
-    // Factory method for creating new booking reviews
     public static BookingReview Create(
         Guid reviewAggregateId,
         Guid bookingAggregateId,

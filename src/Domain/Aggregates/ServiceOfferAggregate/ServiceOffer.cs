@@ -16,10 +16,8 @@ public class ServiceOffer : AggregateRoot
 
     public ReadOnlyCollection<ServicePricing> ServicePricings => _servicePricings.AsReadOnly();
 
-    // Private constructor for EF Core
     private ServiceOffer() { }
 
-    // Factory method for creating new service offers
     public static ServiceOffer Create(
         Guid aggregateId,
         Guid cleanerAggregateId,
@@ -56,7 +54,6 @@ public class ServiceOffer : AggregateRoot
         return serviceOffer;
     }
 
-    // Domain methods
     public void UpdateDetails(string title, string description)
     {
         if (string.IsNullOrWhiteSpace(title))

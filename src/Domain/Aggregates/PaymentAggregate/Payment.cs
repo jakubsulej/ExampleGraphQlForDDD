@@ -1,4 +1,5 @@
 ﻿using Domain.Abstractions;
+using Domain.Aggregates.PaymentAggregate.Entities;
 
 namespace Domain.Aggregates.PaymentAggregate;
 
@@ -13,10 +14,8 @@ public class Payment : AggregateRoot
     public string? FailureReason { get; private set; }
     public string? RefundReason { get; private set; }
 
-    // Private constructor for EF Core
     private Payment() { }
 
-    // Factory method for creating new payments
     public static Payment Create(
         Guid aggregateId,
         Guid bookingAggregateId,
@@ -103,22 +102,4 @@ public class Payment : AggregateRoot
 
         // TODO: Register domain event: PaymentRefundedEvent
     }
-}
-
-public enum PaymentStatus
-{
-    Pending = 0,
-    Processing = 1,
-    Completed = 2,
-    Failed = 3,
-    Refunded = 4
-}
-
-public enum PaymentMethod
-{
-    CreditCard = 0,
-    DebitCard = 1,
-    PayPal = 2,
-    BankTransfer = 3,
-    Cash = 4
 }

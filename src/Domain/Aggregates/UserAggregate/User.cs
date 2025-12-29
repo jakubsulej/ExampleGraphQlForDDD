@@ -11,10 +11,8 @@ public class User : AggregateRoot
     public bool IsEmailVerified { get; private set; }
     public DateTimeOffset? LastLoginAt { get; private set; }
 
-    // Private constructor for EF Core
     private User() { }
 
-    // Factory method for creating new users
     public static User Create(
         Guid aggregateId,
         string email,
@@ -49,7 +47,6 @@ public class User : AggregateRoot
         return user;
     }
 
-    // Domain methods
     public void UpdateEmail(string newEmail)
     {
         if (string.IsNullOrWhiteSpace(newEmail))

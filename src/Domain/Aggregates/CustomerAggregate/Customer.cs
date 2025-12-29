@@ -10,10 +10,8 @@ public class Customer : AggregateRoot
     public string? Address { get; private set; }
     public bool IsActive { get; private set; }
 
-    // Private constructor for EF Core
     private Customer() { }
 
-    // Factory method for creating new customers
     public static Customer Create(
         Guid aggregateId,
         string name,
@@ -47,7 +45,6 @@ public class Customer : AggregateRoot
         return customer;
     }
 
-    // Domain methods
     public void UpdateProfile(string name, string email, string? phoneNumber = null, string? address = null)
     {
         if (string.IsNullOrWhiteSpace(name))
