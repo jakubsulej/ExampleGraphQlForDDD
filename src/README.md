@@ -51,3 +51,25 @@ query GetCleanersPage($page: Int!, $pageSize: Int!) {
   }
 }
 ```
+
+##GetBookings
+```
+query GetBookings($page: Int!, $pageSize: Int!) {
+  bookingsPage(page: $page, pageSize: $pageSize) {
+    bookings {
+      customer {
+        name
+        email
+      }
+      bookingReviews {
+        review
+        rating
+      }
+      serviceOffer {
+        title
+        updatedAt
+      }
+    }
+  }
+}
+```
