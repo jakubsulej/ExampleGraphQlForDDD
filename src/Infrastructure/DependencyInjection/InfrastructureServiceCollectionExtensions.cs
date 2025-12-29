@@ -1,5 +1,4 @@
 ﻿using Domain.Aggregates.BookingAggregate.Repositories;
-using Domain.Aggregates.BookingReviewAggregate.Repositories;
 using Domain.Aggregates.CleanerAggregate.Repositories;
 using Domain.Aggregates.CustomerAggregate.Repositories;
 using Domain.Aggregates.ServiceOfferAggregate.Repositories;
@@ -17,11 +16,10 @@ public static class InfrastructureServiceCollectionExtensions
     {
         services
             .AddDbContextPool<ServiceDbContext>(o => 
-                o.UseSqlServer(configuration.GetConnectionString(""), b => b.EnableRetryOnFailure()), 256)
+                o.UseSqlServer(configuration.GetConnectionString("Database"), b => b.EnableRetryOnFailure()), 256)
             .AddPooledDbContextFactory<ServiceDbContext>(o =>
-                o.UseSqlServer(configuration.GetConnectionString(""), b => b.EnableRetryOnFailure()), 256)
+                o.UseSqlServer(configuration.GetConnectionString("Database"), b => b.EnableRetryOnFailure()), 256)
             .AddScoped<IBookingQueryStore, BookingQueryStore>()
-            .AddScoped<IBookingReviewQueryStore, BookingReviewQueryStore>()
             .AddScoped<ICleanerQueryStore, CleanerQueryStore>()
             .AddScoped<ICustomerQueryStore, CustomerQueryStore>()
             .AddScoped<IServiceOfferQueryStore, ServiceOfferQueryStore>();

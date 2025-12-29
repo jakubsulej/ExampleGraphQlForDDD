@@ -9,6 +9,7 @@ internal class BookingReviewEntityTypeConfiguration : IEntityTypeConfiguration<B
 {
     public void Configure(EntityTypeBuilder<BookingReview> builder)
     {
-        throw new NotImplementedException();
+        builder.ToTable(nameof(Booking), nameof(BookingReview));
+        builder.HasKey(b => b.Id);
     }
 }

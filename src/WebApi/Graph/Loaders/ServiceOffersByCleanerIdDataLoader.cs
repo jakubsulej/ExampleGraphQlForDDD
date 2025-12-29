@@ -1,5 +1,4 @@
 ﻿using Application.Queries;
-using Domain.Aggregates.BookingAggregate.ReadModels;
 using Domain.Aggregates.ServiceOfferAggregate.ReadModels;
 using MediatR;
 
