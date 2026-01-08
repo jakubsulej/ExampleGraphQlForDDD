@@ -2,7 +2,9 @@ using Application.DependencyInjection;
 using Infrastructure.DependencyInjection;
 using WebApi.DependencyInjection;
 
-internal class Program
+namespace WebApi;
+
+public class Program
 {
     public static void Main(string[] args)
     {
